@@ -4,5 +4,6 @@
     "env":{
         "configFile":"config"
     },
-    "enableServiceWorkers": false
+    "enableServiceWorkers": false,
+    "defaultCommandTimeout":20000
 }
