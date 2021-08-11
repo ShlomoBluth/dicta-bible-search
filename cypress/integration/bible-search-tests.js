@@ -33,14 +33,14 @@ sizes.forEach((size) => {
         })
     
 
-        // // afterEach(() => {
-        // //     cy.document().its('body').find('#app').within($body=>{
-        // //         if($body.find('[class="title inner-header-logo-title"]').length>0){
-        // //             cy.get('[class="title inner-header-logo-title"]').click({force:true})
-        // //         }
-        // //     })
-        // //     //cy.navigateToStartPage('https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/')
-        // // })
+        // afterEach(() => {
+        //     cy.document().its('body').find('#app').within($body=>{
+        //         if($body.find('[class="title inner-header-logo-title"]').length>0){
+        //             cy.get('[class="title inner-header-logo-title"]').click({force:true})
+        //         }
+        //     })
+        //     //cy.navigateToStartPage('https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/')
+        // })
 
         it('Each result contains at least one word form of each search word',()=>{
             cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
@@ -113,7 +113,7 @@ sizes.forEach((size) => {
             }).then(()=>{
                 cy.showAllWordForms()
                 //Wait for word forms to update 
-                cy.get('[class="control control--checkbox"]').should('have.length',7)
+                cy.get('[class="control control--checkbox"]',{timeout:30000}).should('have.length',7)
                 cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
                     cy.log(consecutiveWordFormsArray[8])
                     cy.resultPagination({
