@@ -1,4 +1,5 @@
 Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
+  cy.log("Show all meanings and synonyms")
   cy.contains(/Loading|טוען נתונים/g).should('not.exist')
   cy.contains('0 משמעויות נבחרו').should('not.exist')
   cy.get('#meanings_and_synonyms').then(elem=>{
@@ -31,11 +32,13 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
 
 
 Cypress.Commands.add('eachMeaningTests',()=>{
+  cy.intercept('search').as('req')
     //Each word in the search list of meanings
     cy.get('ul[class="inner-ul"]').each($wordMeanings=>{
       cy.get($wordMeanings).within($meanings=>{
         //if list have more than 1 meaning
         if($meanings.find('[class*=selectAll]').length>0){
+          cy.log("Unchecked select all of "+$meanings.text().split(' ')[4])
           cy.get('[class*=selectAll]').within(()=>{
             cy.get('[type="checkbox"]').uncheck({force: true})
             cy.get('[type="checkbox"]').should('not.be.checked')
@@ -45,6 +48,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
           cy.get('span[class="f-narkis"]').parent().each($meaning=>{
             cy.get($meaning).parent().within(()=>{
               let num
+              cy.log('Check '+$meaning.text())
               cy.get('[type="checkbox"]').check({force: true})
               //Number of results on the top
               cy.nomberOfResults().then(nomOfRes=>{
@@ -56,11 +60,14 @@ Cypress.Commands.add('eachMeaningTests',()=>{
               cy.loaderNotExist()
             }).then(()=>{
               cy.get($meaning).within(()=>{
-                cy.meaningTest()
+                cy.wait('@req').then(()=>{
+                  cy.meaningTest()
+                })
               })
             }).then(()=>{
               //Uncheck meaning
               cy.get($meaning).parent().within(()=>{
+                cy.log('Uncheck '+$meaning.text())
                 cy.get('[type="checkbox"]').uncheck({force: true})
                 cy.get('[type="checkbox"]').should('not.be.checked')
                 cy.loaderNotExist()
@@ -68,12 +75,15 @@ Cypress.Commands.add('eachMeaningTests',()=>{
             })
           })
           cy.get('[class*=selectAll]').within(()=>{
+            cy.log("Check select all of "+$meanings.text().split(' ')[4])
             cy.get('[type="checkbox"]').check({force: true})
             cy.get('[type="checkbox"]').should('be.checked')
             cy.loaderNotExist()
           })
         }else{
-          cy.meaningTest()
+          cy.wait('@req').then(()=>{
+            cy.meaningTest()
+          })
         }
       })
     })
@@ -192,7 +202,9 @@ Cypress.Commands.add('getResultListOfMeanings',($res)=>{
 
 Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
   let verseLlistMeanings=new Array()
+  cy.log("Collapse meanings")
   cy.get($listCollapseBtn).click({force: true})
+  cy.get('a[class*="show-mobile-view"]').should('exist')
   //Each meaning   
   cy.get('[class="description-text"]').each($descriptionText=>{
     cy.get($descriptionText).then(text=>{
@@ -237,11 +249,13 @@ Cypress.Commands.add('synonymsTests',()=>{
       if($synonyms.find('[class="switch"]').length>0){
         //Each synonym 
         cy.get('[class="switch"]').each($synonym=>{
+          cy.log($synonym.text()+" checked")
           cy.get($synonym).children('[type="checkbox"]').check({force: true})
           cy.get('[class*="loader"]').should('not.exist')
           cy.document().its('body').find('#app').within(()=>{
             cy.eachMeaningTests()
           })
+          cy.log($synonym.text()+" unchecked")
           cy.get($synonym).children('[type="checkbox"]').uncheck({force: true})
         })
       }     
