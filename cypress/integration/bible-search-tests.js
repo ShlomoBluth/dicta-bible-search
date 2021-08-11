@@ -111,14 +111,15 @@ sizes.forEach((size) => {
             cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
                 expect(parseInt($numberOfResults.text())).to.eq(2)
             }).then(()=>{
-                cy.showAllWordForms()
-                //Wait for word forms to update 
-                cy.get('[class="control control--checkbox"]',{timeout:30000}).should('have.length',7)
-                cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-                    cy.log(consecutiveWordFormsArray[8])
-                    cy.resultPagination({
-                        tests:'wordFormsConsecutive',
-                        data:consecutiveWordFormsArray
+                cy.showAllWordForms().then(()=>{
+                    //Wait for word forms to update 
+                    cy.get('[class="control control--checkbox"]').should('have.length',7)
+                    cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+                        cy.log(consecutiveWordFormsArray[8])
+                        cy.resultPagination({
+                            tests:'wordFormsConsecutive',
+                            data:consecutiveWordFormsArray
+                        })
                     })
                 })
             })
