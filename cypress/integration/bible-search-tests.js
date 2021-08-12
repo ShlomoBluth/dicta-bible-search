@@ -96,34 +96,34 @@ sizes.forEach((size) => {
         //     cy.wordFormsWithNumberOfAppearances()
         // })
     
-        // it('A pair of words that come one after the other',()=>{
-        //     cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
-        //     //Number of results
-        //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //         expect(parseInt($numberOfResults.text())).to.eq(116)
-        //     })
-        //     cy.visit('/')
-        //     cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
-        //     cy.theFormOfTheText('עם ניקוד')
+        it('A pair of words that come one after the other',()=>{
+            cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
+            //Number of results
+            cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                expect(parseInt($numberOfResults.text())).to.eq(116)
+            })
+            cy.visit('/')
+            cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
+            cy.theFormOfTheText('עם ניקוד')
             
-        //     //Number of results
-        //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-        //         expect(parseInt($numberOfResults.text())).to.eq(2)
-        //     }).then(()=>{
-        //         cy.showAllWordForms().then(()=>{
-        //             //Wait for word forms to update 
-        //             cy.get('[class="control control--checkbox"]').should('have.length',7)
-        //             cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-        //                 cy.log(consecutiveWordFormsArray[8])
-        //                 cy.resultPagination({
-        //                     tests:'wordFormsConsecutive',
-        //                     data:consecutiveWordFormsArray
-        //                 })
-        //             })
-        //         })
-        //     })
-        // })
+            //Number of results
+            cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                expect(parseInt($numberOfResults.text())).to.eq(2)
+            }).then(()=>{
+                cy.showAllWordForms().then(()=>{
+                    //Wait for word forms to update 
+                    cy.get('[class="control control--checkbox"]').should('have.length',7)
+                    cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+                        cy.log(consecutiveWordFormsArray[8])
+                        cy.resultPagination({
+                            tests:'wordFormsConsecutive',
+                            data:consecutiveWordFormsArray
+                        })
+                    })
+                })
+            })
+        })
     
         // it('Each result contains the specific word',()=>{
         //     cy.searchRun({text:'לַאֲרָיוֹת',collection:'תנ"ך',language:'Hebrew'})
@@ -213,13 +213,13 @@ sizes.forEach((size) => {
         //     cy.eachMeaningTests() 
         // })
     
-        it('Each meaning and synonym appears in the results as the number of times it has been written'+
-        ' next to meaning',()=>{
-            cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
-            cy.theFormOfTheText('עם ניקוד')
-            cy.showMeaningsAndSynonyms()
-            cy.synonymsTests()
-        })
+        // it('Each meaning and synonym appears in the results as the number of times it has been written'+
+        // ' next to meaning',()=>{
+        //     cy.searchRun({text:'הבל הבלים',collection:'תנ"ך',language:'Hebrew'})
+        //     cy.theFormOfTheText('עם ניקוד')
+        //     cy.showMeaningsAndSynonyms()
+        //     cy.synonymsTests()
+        // })
     
         // it('Each result has at least one meaning or synonym of each search word',()=>{
         //     let numberOfResults
