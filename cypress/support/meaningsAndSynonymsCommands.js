@@ -32,7 +32,7 @@ Cypress.Commands.add('showMeaningsAndSynonyms',()=>{
 
 
 Cypress.Commands.add('eachMeaningTests',()=>{
-  cy.intercept('search').as('req')
+  let word
     //Each word in the search list of meanings
     cy.get('ul[class="inner-ul"]').each($wordMeanings=>{
       cy.get($wordMeanings).within($meanings=>{
@@ -49,6 +49,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
             cy.get($meaning).parent().within(()=>{
               let num
               cy.log('Check '+$meaning.text())
+              cy.intercept('textAnalysis').as($meaning.text()+'checkreq')
               cy.get('[type="checkbox"]').check({force: true})
               //Number of results on the top
               cy.nomberOfResults().then(nomOfRes=>{
@@ -60,7 +61,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
               cy.loaderNotExist()
             }).then(()=>{
               cy.get($meaning).within(()=>{
-                cy.wait('@req').then(()=>{
+                cy.wait('@'+$meaning.text()+'checkreq').then(()=>{
                   cy.meaningTest()
                 })
               })
@@ -75,13 +76,15 @@ Cypress.Commands.add('eachMeaningTests',()=>{
             })
           })
           cy.get('[class*=selectAll]').within(()=>{
+            word=$meanings.text().split(' ')[4]
             cy.log("Check select all of "+$meanings.text().split(' ')[4])
+            cy.intercept('textAnalysis').as($meanings.text().split(' ')[4]+'selectallcheckreq')
             cy.get('[type="checkbox"]').check({force: true})
             cy.get('[type="checkbox"]').should('be.checked')
             cy.loaderNotExist()
           })
         }else{
-          cy.wait('@req').then(()=>{
+          cy.wait('@'+word+'selectallcheckreq').then(()=>{
             cy.meaningTest()
           })
         }
