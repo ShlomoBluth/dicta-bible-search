@@ -1,3 +1,6 @@
 [submodule "searchShared"]
 	path = searchShared
 	url = https://github.com/ShlomoBluth/searchShared.git
+[submodule "dicta-shared"]
+	path = dicta-shared
+	url = https://github.com/ShlomoBluth/dicta-shared.git
