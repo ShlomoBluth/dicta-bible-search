@@ -16,19 +16,7 @@ sizes.forEach((size) => {
     describe('bible-search-tests',()=>{
     
         beforeEach(() => {
-            if (Cypress._.isArray(size)) {
-                Cypress.config({
-                    viewportWidth: size[0],
-                    viewportHeight: size[1]
-                })
-                cy.viewport(size[0], size[1])
-              } else {
-                Cypress.config({
-                    viewportWidth: 375,
-                    viewportHeight: 812
-                })
-                cy.viewport(size)
-            }
+            cy.screenSize({size:size})
             cy.visitpage({url:'/'})
         })
     
