@@ -34,7 +34,7 @@ jobs:
         echo "REQUESTS_TESTS=$(grep REQUESTS_TESTS cypress.json | sed 's/REQUESTS_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV 
   
 
-    - name: Run chrome tests 
+    - name: Run chrome tool tests 
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
       if: ${{env.TOOL_TESTS == 'true'}} 
 
