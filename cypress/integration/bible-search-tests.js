@@ -5,7 +5,7 @@ const path = require('path')
 
 
 
-let sizes = ['iphone-x',[1000, 660]]
+let sizes = [[1000, 660]]//'iphone-x',
 
 // before(()=>{
 //     cy.visit('/')

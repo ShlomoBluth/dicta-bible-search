@@ -3,6 +3,7 @@ Cypress.Commands.add('removeTaamim',()=>{
 })
 
 
+
 Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delaySeconds=0})=>{
   cy.intercept('POST', '**'+url+'**', {
     delayMs:1000*delaySeconds,
@@ -11,7 +12,7 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
   if(message.length>0){
     cy.contains(message,{timeout:1000*delaySeconds}).should('not.exist')
   }  
-  cy.searchRun({text:'בראשית ברא',language:language, delay:true})
+  cy.searchRunforReq({text:'בראשית ברא',language:language, delay:true})
 
   if(delaySeconds>0){
     cy.get('body').then(($body) => {
