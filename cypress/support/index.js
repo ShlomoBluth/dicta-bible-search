@@ -19,20 +19,8 @@ import './meaningsAndSynonymsCommands.js'
 import '../../searchShared/wordFormCommands.js'
 import '../../searchShared/booksCommand.js'
 import '../../searchShared/searchCommands.js'
-import '../../dicta-shared/shared.js'
+import '../../dicta-shared/index.js'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-import addContext from 'mochawesome/addContext'
-
-Cypress.on("test:after:run", (test, runnable) => {
-    
-    let videoName = Cypress.spec.name
-    videoName = videoName.replace('/.js.*', '.js')
-    const videoUrl = 'videos/' + videoName + '.mp4'
-
-    addContext({ test }, videoUrl)
-});
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     return false;
