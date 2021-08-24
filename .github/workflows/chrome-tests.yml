@@ -36,7 +36,7 @@ jobs:
 
     - name: Run chrome tests 
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
-      if: ${{env.BASIC_TESTS == 'true'}} 
+      if: ${{env.TOOL_TESTS == 'true'}} 
 
     - name: Run chtome requests tests
       run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js
