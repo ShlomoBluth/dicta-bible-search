@@ -3,6 +3,7 @@
     "baseUrl":"https://multisearch-2-dev--cranky-banach-377068.netlify.app/",
     "enableServiceWorkers": false,
     "defaultCommandTimeout":20000,
+    "failOnStatusCode": false,
     "reporterOptions": {
         "configFile": "dicta-shared/reporter-config.json"
     },
