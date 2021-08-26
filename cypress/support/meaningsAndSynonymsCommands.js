@@ -49,7 +49,7 @@ Cypress.Commands.add('eachMeaningTests',()=>{
             cy.get($meaning).parent().within(()=>{
               let num
               cy.log('Check '+$meaning.text())
-              cy.wrap($meaning.text()).should('not.contain','()')
+              cy.wrap($meaning.text(),{timeout:60000}).should('not.contain','()')
               cy.intercept('textAnalysis').as($meaning.text()+'checkreq')
               cy.get('[type="checkbox"]').check({force: true})
               //Number of results on the top
