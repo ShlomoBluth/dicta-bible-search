@@ -15,9 +15,11 @@ let sizes = ['iphone-x',[1000, 660]]
 sizes.forEach((size) => {
     describe('bible-search-tests',()=>{
     
+        Cypress.config("retries",{"runmode": 0, "openmode": 2})
         beforeEach(() => {
             cy.screenSize({size:size})
             cy.visitpage({url:'/'})
+
         })
     
 
