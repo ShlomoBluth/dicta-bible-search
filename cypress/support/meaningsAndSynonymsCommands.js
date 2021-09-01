@@ -46,10 +46,11 @@ Cypress.Commands.add('eachMeaningTests',()=>{
           })
           //Each meaning in the list
           cy.get('span[class="f-narkis"]').parent().each($meaning=>{
+            cy.contains('()',{timeout:60000}).should('not.exist')
             cy.get($meaning).parent().within(()=>{
               let num
               cy.log('Check '+$meaning.text())
-              cy.wrap($meaning.text(),{timeout:60000}).should('not.contain','()')
+              //cy.wrap($meaning.text(),{timeout:60000}).should('not.contain','()')
               cy.intercept('textAnalysis').as($meaning.text()+'checkreq')
               cy.get('[type="checkbox"]').check({force: true})
               //Number of results on the top
