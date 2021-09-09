@@ -35,7 +35,7 @@ jobs:
   
 
     - name: Run chrome tool tests 
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js
+      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: Copy test execution videos 
@@ -44,8 +44,8 @@ jobs:
         cp -r cypress/videos public/videos
       if: ${{ always() && (env.TOOL_TESTS == 'true')}}
 
-    - name: Run chtome requests tests
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js
+    - name: Run chrome requests tests
+      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser chrome --spec ./cypress/integration/requestsTests.js --config trashAssetsBeforeRuns=false
       if: ${{always() && (env.REQUESTS_TESTS == 'true')}}
 
     - name: Copy test execution videos 

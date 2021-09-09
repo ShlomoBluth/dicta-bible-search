@@ -35,7 +35,7 @@ jobs:
   
     
     - name: Run firefox tool tests 
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser firefox --spec ./cypress/integration/toolTests.js
+      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser firefox --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
       if: ${{env.TOOL_TESTS == 'true'}} 
 
     - name: Copy test execution videos 
@@ -45,7 +45,7 @@ jobs:
       if: ${{ always() && (env.TOOL_TESTS == 'true')}}
 
     - name: Run firefox requests tests
-      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser firefox --spec ./cypress/integration/requestsTests.js
+      run: xvfb-run -s '-screen 0 1280x800x24' npx cypress run --browser firefox --spec ./cypress/integration/requestsTests.js --config trashAssetsBeforeRuns=false
       if: ${{always() && (env.REQUESTS_TESTS == 'true')}}
 
     - name: Copy test execution videos 
