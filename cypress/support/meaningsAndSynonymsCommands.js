@@ -222,7 +222,8 @@ Cypress.Commands.add('getVerseListMeanings',($listCollapseBtn)=>{
 })
   
 Cypress.Commands.add('ResultsOfSelectedMeaningsAndSynonyms',(result,selectedMeaningsAndSynonyms)=>{
-    let hasMeanings  
+    let hasMeanings
+    cy.get('[class*=spinner]',{timeout:60000}).should('not.exist')  
     cy.getResultListOfMeanings(result).then(listMeanings=>{
       //Loop through each word in search
       for(let i=0;i<selectedMeaningsAndSynonyms.length;i++){

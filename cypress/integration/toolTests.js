@@ -26,14 +26,6 @@ urls.forEach((urlValue,urlKey)=>{
                 cy.visitpage({url:urlValue})
             })
 
-            // afterEach(() => {
-            //     cy.document().its('body').find('#app').within($body=>{
-            //         if($body.find('[class="title inner-header-logo-title"]').length>0){
-            //             cy.get('[class="title inner-header-logo-title"]').click({force:true})
-            //         }
-            //     })
-            //     //cy.navigateToStartPage('https://use-dicta-components-2--tender-hamilton-5d028e.netlify.app/')
-            // })
 
             it('Each result contains at least one word form of each search word',()=>{
                 cy.searchRun({text:'יום השישי',collection:'תנ"ך',language:'Hebrew'})
