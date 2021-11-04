@@ -270,14 +270,18 @@ urls.forEach((urlValue,urlKey)=>{
                     //Select synonyms of the word
                     cy.get('[class="inner-ul"]').first().next().within(()=>{
                         cy.selectSynonym('רִנָּה')
+                    })
+                    cy.sortedByRelevance()
+                    cy.get('[class="inner-ul"]').first().next().within(()=>{
                         cy.selectSynonym('גִּילָה')
                     })
+                    cy.sortedByRelevance()
                     // cy.get('span[class="f-narkis"]').contains('שָׂשֹׂון').siblings('[class="text-numbers"]')
                     // .should('contain','(6)')
                 }).then(()=>{
-                    //The number in the top has 6
-                    cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-                        expect(parseInt($numberOfResults.text())).to.eq(6)
+                     //The number in the top has 6
+                     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                        cy.wrap(parseInt($numberOfResults.text())).should('eq',6)
                     })
                 })
                 cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
