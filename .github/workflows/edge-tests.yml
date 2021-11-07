@@ -24,6 +24,7 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
+        npx browserslist@latest --update-db
         npx ci
         $(npm bin)/cypress cache path
         $(npm bin)/cypress cache list
