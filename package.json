@@ -24,6 +24,7 @@
     "mochawesome-merge": "^4.2.0"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001278",
     "js-levenshtein": "^1.1.6",
     "mammoth": "^1.4.16"
   }
