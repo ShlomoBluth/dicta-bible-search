@@ -12,7 +12,7 @@ jobs:
     name: Run on Edge
     runs-on: ubuntu-latest
     container: 
-      image: cypress/browsers:node14.10.1-edge88
+      image: cypress/base:12.18.4
 
 
     steps:
@@ -40,7 +40,6 @@ jobs:
 
     - name: Run edge tool tests
       run: |
-        npx browserslist@latest --update-db
         touch toolTest.log
         toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
         --config trashAssetsBeforeRuns=false'
