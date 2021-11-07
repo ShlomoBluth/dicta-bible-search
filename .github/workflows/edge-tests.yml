@@ -24,7 +24,6 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
-        sudo dbus-daemon --system &> /dev/null
         npx ci
         $(npm bin)/cypress cache path
         $(npm bin)/cypress cache list
@@ -41,6 +40,7 @@ jobs:
 
     - name: Run edge tool tests
       run: |
+        npx browserslist@latest --update-db
         touch toolTest.log
         toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
         --config trashAssetsBeforeRuns=false'
