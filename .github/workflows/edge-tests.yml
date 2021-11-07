@@ -24,6 +24,8 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
+        sudo mkdir /run/dbus -p
+        sudo dbus-daemon --system
         npx ci
         $(npm bin)/cypress cache path
         $(npm bin)/cypress cache list
