@@ -24,13 +24,13 @@ jobs:
 
     - name: Install a project with a clean slate
       run: |
-        npx browserslist@latest --update-db
         npx ci
         $(npm bin)/cypress cache path
         $(npm bin)/cypress cache list
         $(npm bin)/cypress verify
         mkdir public
         mkdir public/videos
+        npx browserslist@4.10 --update-db
 
     
     - name: Set var 
