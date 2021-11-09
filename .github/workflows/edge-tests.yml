@@ -40,7 +40,7 @@ jobs:
 
     - name: Run edge tool tests
       run: |
-        npx cypress run --browser edge --spec ./cypress/integration/toolTests.js
+        npx cypress run --browser edge --spec ./cypress/integration/toolTests.js --config trashAssetsBeforeRuns=false
         # touch toolTest.log
         # toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
         # --config trashAssetsBeforeRuns=false'
