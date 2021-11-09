@@ -40,22 +40,23 @@ jobs:
 
     - name: Run edge tool tests
       run: |
-        touch toolTest.log
-        toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
-        --config trashAssetsBeforeRuns=false'
-        if $toolTestsCommand >> toolTest.log
-        then
-          cat toolTest.log
-        else
-          if grep -q 'Error: ffmpeg exited' toolTest.log \
-          || grep -q 'Because this error occurred during a `before each` hook' toolTest.log \
-          || grep -q 'EISDIR: illegal operation on a directory, read' toolTest.log;
-          then
-            cat toolTest.log; $toolTestsCommand
-          else
-            cat toolTest.log; exit 1
-          fi
-        fi 
+        npx cypress run --browser edge --spec ./cypress/integration/toolTests.js
+        # touch toolTest.log
+        # toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
+        # --config trashAssetsBeforeRuns=false'
+        # if $toolTestsCommand >> toolTest.log
+        # then
+        #   cat toolTest.log
+        # else
+        #   if grep -q 'Error: ffmpeg exited' toolTest.log \
+        #   || grep -q 'Because this error occurred during a `before each` hook' toolTest.log \
+        #   || grep -q 'EISDIR: illegal operation on a directory, read' toolTest.log;
+        #   then
+        #     cat toolTest.log; $toolTestsCommand
+        #   else
+        #     cat toolTest.log; exit 1
+        #   fi
+        # fi 
       if: ${{env.TOOL_TESTS == 'true'}}
 
     - name: Copy test execution videos 
