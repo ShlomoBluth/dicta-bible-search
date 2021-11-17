@@ -6,7 +6,7 @@ const path = require('path')
 
 
 const urls = new Map();
-//urls.set('live',Cypress.env('LIVE_URL'))
+urls.set('live',Cypress.env('LIVE_URL'))
 urls.set('dev',Cypress.env('DEV_URL')) 
 
 const sizes= new Map();
@@ -81,34 +81,34 @@ urls.forEach((urlValue,urlKey)=>{
             //     cy.wordFormsWithNumberOfAppearances()
             // })
         
-            it('A pair of words that come one after the other',()=>{
-                cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
-                cy.theFormOfTheText('עם ניקוד')
-                //Number of results
-                cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-                    expect(parseInt($numberOfResults.text())).to.eq(116)
-                })
-                cy.visitpage({url:urlValue})
-                cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
-                cy.theFormOfTheText('עם ניקוד')
+            // it('A pair of words that come one after the other',()=>{
+            //     cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
+            //     cy.theFormOfTheText('עם ניקוד')
+            //     //Number of results
+            //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            //         expect(parseInt($numberOfResults.text())).to.eq(116)
+            //     })
+            //     cy.visitpage({url:urlValue})
+            //     cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
+            //     cy.theFormOfTheText('עם ניקוד')
                 
-                //Number of results
-                cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-                    expect(parseInt($numberOfResults.text())).to.eq(2)
-                }).then(()=>{
-                    cy.showAllWordForms().then(()=>{
-                        //Wait for word forms to update 
-                        cy.get('[class="control control--checkbox"]').should('have.length',7)
-                        cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
-                            cy.log(consecutiveWordFormsArray[8])
-                            cy.resultPagination({
-                                tests:'wordFormsConsecutive',
-                                data:consecutiveWordFormsArray
-                            })
-                        })
-                    })
-                })
-            })
+            //     //Number of results
+            //     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+            //         expect(parseInt($numberOfResults.text())).to.eq(2)
+            //     }).then(()=>{
+            //         cy.showAllWordForms().then(()=>{
+            //             //Wait for word forms to update 
+            //             cy.get('[class="control control--checkbox"]').should('have.length',7)
+            //             cy.consecutiveWordsFormsArray().then(consecutiveWordFormsArray=>{
+            //                 cy.log(consecutiveWordFormsArray[8])
+            //                 cy.resultPagination({
+            //                     tests:'wordFormsConsecutive',
+            //                     data:consecutiveWordFormsArray
+            //                 })
+            //             })
+            //         })
+            //     })
+            // })
         
             // it('Each result contains the specific word',()=>{
             //     cy.searchRun({text:'לַאֲרָיוֹת',collection:'תנ"ך',language:'Hebrew'})
@@ -261,33 +261,37 @@ urls.forEach((urlValue,urlKey)=>{
            
         
         
-            // it('No meanings but there are synonyms',()=>{
-            //     cy.searchRun({text:'ששון חדווה',collection:'תנ"ך',language:'Hebrew'})
-            //     cy.theFormOfTheText('עם ניקוד')
-            //     //Results not exist
-            //     cy.get('[class="result-list"]').should('not.exist').then(()=>{
-            //         cy.showMeaningsAndSynonyms()
-            //         //Select synonyms of the word
-            //         cy.get('[class="inner-ul"]').first().next().within(()=>{
-            //             cy.selectSynonym('רִנָּה')
-            //         })
-            //         cy.sortedByRelevance()
-            //         cy.get('[class="inner-ul"]').first().next().within(()=>{
-            //             cy.selectSynonym('גִּילָה')
-            //         })
-            //         cy.sortedByRelevance()
-            //         // cy.get('span[class="f-narkis"]').contains('שָׂשֹׂון').siblings('[class="text-numbers"]')
-            //         // .should('contain','(6)')
-            //     }).then(()=>{
-            //          //The number in the top has 6
-            //          cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-            //             cy.wrap(parseInt($numberOfResults.text())).should('eq',6)
-            //         })
-            //     })
-            //     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
-            //         cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
-            //     })
-            // })
+            it('No meanings but there are synonyms',()=>{
+                cy.searchRun({text:'ששון חדווה',collection:'תנ"ך',language:'Hebrew'})
+                cy.theFormOfTheText('עם ניקוד')
+                //Results not exist
+                cy.get('[class="result-list"]').should('not.exist').then(()=>{
+                    cy.showMeaningsAndSynonyms()
+                    //Select synonyms of the word
+                    cy.get('[class="inner-ul"]').first().next().within(()=>{
+                        cy.selectSynonym('רִנָּה')
+                    })
+                    cy.sortedByRelevance()
+                    cy.get('[class="inner-ul"]').first().next().within(()=>{
+                        cy.selectSynonym('גִּילָה')
+                    })
+                    cy.sortedByRelevance()
+                    // cy.get('span[class="f-narkis"]').contains('שָׂשֹׂון').siblings('[class="text-numbers"]')
+                    // .should('contain','(6)')
+                }).then(()=>{
+                     //The number in the top has 6
+                     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
+                        cy.wrap(parseInt($numberOfResults.text())).should('eq',6)
+                    })
+                }).then(()=>{
+                    if(sizeKey=='mobile'){
+                        cy.showMeaningsAndSynonyms()
+                    }
+                })
+                cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
+                    cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
+                })
+            })
         
             // // ////////////////////////////////////////////////////////////////////////
         
