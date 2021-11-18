@@ -262,6 +262,7 @@ urls.forEach((urlValue,urlKey)=>{
         
         
             it('No meanings but there are synonyms',()=>{
+                let meaningsAndSynonymsMatrix
                 cy.searchRun({text:'ששון חדווה',collection:'תנ"ך',language:'Hebrew'})
                 cy.theFormOfTheText('עם ניקוד')
                 //Results not exist
@@ -271,26 +272,24 @@ urls.forEach((urlValue,urlKey)=>{
                     cy.get('[class="inner-ul"]').first().next().within(()=>{
                         cy.selectSynonym('רִנָּה')
                     })
-                    cy.sortedByRelevance()
                     cy.get('[class="inner-ul"]').first().next().within(()=>{
                         cy.selectSynonym('גִּילָה')
+                    }).then(()=>{
+                        cy.eachSelectedMeaningsAndSynonymsMatrix().then($meaningsAndSynonymsMatrix=>{
+                            meaningsAndSynonymsMatrix=$meaningsAndSynonymsMatrix
+                        })
+                        cy.sortedByRelevance()
+                        cy.get('.f > span').contains('1').should('exist')
                     })
-                    cy.sortedByRelevance()
                     // cy.get('span[class="f-narkis"]').contains('שָׂשֹׂון').siblings('[class="text-numbers"]')
                     // .should('contain','(6)')
                 }).then(()=>{
                      //The number in the top has 6
-                     cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-                        cy.wrap(parseInt($numberOfResults.text())).should('eq',6)
-                    })
+                     cy.get('.f > span > :nth-child(2)').should('contain','6')
                 }).then(()=>{
-                    if(sizeKey=='mobile'){
-                        cy.showMeaningsAndSynonyms()
-                    }
-                })
-                cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
                     cy.resultPagination({tests:'selectedMeaningsAndSynonyms',data:meaningsAndSynonymsMatrix})
                 })
+                
             })
         
             // // ////////////////////////////////////////////////////////////////////////
