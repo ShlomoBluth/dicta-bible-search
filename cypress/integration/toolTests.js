@@ -85,9 +85,7 @@ urls.forEach((urlValue,urlKey)=>{
                 cy.searchRun({text:'שלום בית',collection:'תנ"ך',language:'Hebrew'})
                 cy.theFormOfTheText('עם ניקוד')
                 //Number of results
-                cy.get('.f > span > :nth-child(2)').then($numberOfResults=>{
-                    expect(parseInt($numberOfResults.text())).to.eq(116)
-                })
+                cy.get('.f > span > :nth-child(2)').should('contain','116')
                 cy.visitpage({url:urlValue})
                 cy.searchRun({text:'"שלום בית"',collection:'תנ"ך',language:'Hebrew'})
                 cy.theFormOfTheText('עם ניקוד')
