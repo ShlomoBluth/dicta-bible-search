@@ -11,7 +11,7 @@
         "LIVE_URL":"https://search.dicta.org.il",
         "configFile":"config",
         "TOOL_TESTS":true,
-        "REQUESTS_TESTS":true,
+        "REQUESTS_TESTS":false,
         "RECORD_KEY":"f015ae7b-ed3d-4a35-a648-8c1428f03e3c"
     }
 }
