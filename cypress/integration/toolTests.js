@@ -6,7 +6,7 @@ const path = require('path')
 
 
 const urls = new Map();
-//urls.set('live',Cypress.env('LIVE_URL'))
+urls.set('live',Cypress.env('LIVE_URL'))
 urls.set('dev',Cypress.env('DEV_URL')) 
 
 const sizes= new Map();
