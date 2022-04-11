@@ -234,13 +234,12 @@ urls.forEach((urlValue,urlKey)=>{
                 })
             })
         
-            // ////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////
         
             it('Removal of meaning',()=>{
                 cy.searchRun({text:'אריה',collection:'תנ"ך',language:'Hebrew'})
                 cy.theFormOfTheText('עם ניקוד')
                 cy.showMeaningsAndSynonyms()
-                //cy.intercept('**').as('requests')
                 cy.get('li[class="slide-li"]').contains('אֲרִי').within(()=>{
                     cy.get('[type="checkbox"]').uncheck({force: true})
                     cy.get('[type="checkbox"]').should('not.be.checked')
@@ -248,7 +247,7 @@ urls.forEach((urlValue,urlKey)=>{
                     cy.get('[class*="loader"]').should('not.exist')
                     //Check meanings update
                     cy.get('[class*="collapse-btn"]').first().click({force: true}).then(()=>{
-                        cy.get('[class="description-text"]').should('have.length',15)
+                        cy.get('[class="description-text"]').should('have.length',23)
                     })
                     cy.get('[class*="collapse-btn"]').first().click({force: true})
                     cy.eachSelectedMeaningsAndSynonymsMatrix().then(meaningsAndSynonymsMatrix=>{
