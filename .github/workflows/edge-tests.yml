@@ -1,12 +1,12 @@
 name: Edge tests
 
 on: 
-   push
-  # schedule:
-  #   # * is a special character in YAML so you have to quote this string
-  #   # synoptic
-  #   - cron:  '0 2,10,18 * * *'
-  #   #- cron:  '0 6,14,22 * * *'
+  # push
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # synoptic
+    - cron:  '0 2,10,18 * * *'
+    #- cron:  '0 6,14,22 * * *'
 
 
 jobs:
