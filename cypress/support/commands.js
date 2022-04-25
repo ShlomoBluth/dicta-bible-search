@@ -14,10 +14,15 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
   }  
   cy.searchRunforReq({text:'בראשית ברא',language:language, delay:true})
 
-  if(delaySeconds>0){
+  
+  if(delaySeconds>0){    
+    if(url.includes('textAnalysis')){
+      cy.contains(message,{timeout:1000*delaySeconds}).should('exist')
+    }
     cy.get('body').then(($body) => {
       cy.get('[class*="loader"]',{timeout:1000*delaySeconds}).should('not.exist')
       cy.contains(/Loading|טוען נתונים/g,{timeout:1000*delaySeconds}).should('not.exist')
+      //cy.contains(/0 Books selected|0 ספרים נבחרו/g,{timeout:1000*delaySeconds}).should('not.exist')
     })
   }
 
