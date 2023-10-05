@@ -14,24 +14,45 @@ Cypress.Commands.add('searchRequest',({url,language,status=200,message='',delayS
   }  
   cy.searchRunforReq({text:'בראשית ברא',language:language, delay:true})
 
-  
-  if(delaySeconds>0){    
-    if(url.includes('textAnalysis')){
-      cy.contains(message,{timeout:1000*delaySeconds}).should('exist')
-    }
-    cy.get('body').then(($body) => {
-      cy.get('[class*="loader"]',{timeout:1000*delaySeconds}).should('not.exist')
-      cy.contains(/Loading|טוען נתונים/g,{timeout:1000*delaySeconds}).should('not.exist')
-      //cy.contains(/0 Books selected|0 ספרים נבחרו/g,{timeout:1000*delaySeconds}).should('not.exist')
-    })
-  }
+  //cy.log(Cypress.config("viewportWidth")).pause()
 
-  if(message.length>0){
+    
+  
+
+  if(Cypress.config("viewportWidth")<600 && !(message.includes('אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר') || 
+  message.includes('Oops. Something went wrong Please try again later'))){
+    cy.get('#sidebar-btn').click({force:true})
+    if(delaySeconds>0){
+      cy.get('body').then(($body) => {
+        cy.get('[class*="loader"]',{timeout:1000*delaySeconds}).should('not.exist')
+        cy.get('.mobile-sidebar-content-div').contains(/Loading|טוען נתונים/g,{timeout:1000*delaySeconds}).should('not.exist')
+        
+      })
+    }
+    cy.get('.mobile-sidebar-content-div').contains(message).should('exist')
+  }
+  else if(message.length>0){
+    if(delaySeconds>0){
+      cy.get('body').then(($body) => {
+        cy.get('[class*="loader"]',{timeout:1000*delaySeconds}).should('not.exist')
+        cy.contains(/Loading|טוען נתונים/g,{timeout:1000*delaySeconds}).should('not.exist')
+        
+      })
+    }
     cy.contains(message).should('exist')
   }  
 
+  // if(message.includes('אופס יש לנו בעיה נסו שנית, או בקרו באתר מאוחר יותר') || 
+  //   message.includes('Oops. Something went wrong Please try again later')){
+  //     cy.contains(message).should('exist')
+  // }
+  // else if(message.length>0){
+  //   cy.get('.mobile-sidebar-content-div').contains(message).should('exist')
+  // }
    
 })
+
+
 
 
 

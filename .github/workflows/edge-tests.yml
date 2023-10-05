@@ -4,9 +4,7 @@ on:
   # push
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # synoptic
-    - cron:  '0 2,10,18 * * *'
-    #- cron:  '0 6,14,22 * * *'
+    - cron:  '0 4,12,20 * * *'
 
 
 jobs:
@@ -19,14 +17,14 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
       with: 
         submodules: true
 
 
     - name: Install a project with a clean slate
       run: |
-        npx ci
+        npm install --save-dev cypress@12.1.0
         $(npm bin)/cypress cache path
         $(npm bin)/cypress cache list
         $(npm bin)/cypress verify
@@ -36,23 +34,22 @@ jobs:
     
     - name: Set var 
       run: |
-        echo "TOOL_TESTS=$(grep TOOL_TESTS cypress.json | sed 's/TOOL_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV
-        echo "REQUESTS_TESTS=$(grep REQUESTS_TESTS cypress.json | sed 's/REQUESTS_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV 
+        echo "TOOL_TESTS=$(grep TOOL_TESTS cypress.config.js | sed 's/TOOL_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV
+        echo "REQUESTS_TESTS=$(grep REQUESTS_TESTS cypress.config.js | sed 's/REQUESTS_TESTS//' | sed 's/"//g' |sed 's/,//' | sed 's/://')" | tr -d ' ' >> $GITHUB_ENV 
   
 
     - name: Run edge tool tests
       run: |
         touch toolTest.log
-        toolTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/toolTests.js \
-        --config trashAssetsBeforeRuns=false'
+        toolTestsCommand='npx cypress run --browser edge --spec ./cypress/e2e/toolTests.js \
+        --config trashAssetsBeforeRuns=false '
         if $toolTestsCommand >> toolTest.log
         then
           cat toolTest.log
         else
           if grep -q 'Error: ffmpeg exited' toolTest.log \
           || grep -q 'Because this error occurred during a `before each` hook' toolTest.log \
-          || grep -q 'EISDIR: illegal operation on a directory, read' toolTest.log \
-          || grep -q '`cy.visit()` failed trying to load' toolTest.log;
+          || grep -q 'EISDIR: illegal operation on a directory, read' toolTest.log;
           then
             cat toolTest.log; $toolTestsCommand
           else
@@ -69,7 +66,7 @@ jobs:
     - name: Run edge requests tests
       run: |
         touch requestsTest.log
-        requestsTestsCommand='npx cypress run --browser edge --spec ./cypress/integration/requestsTests.js \
+        requestsTestsCommand='npx cypress run --browser edge --spec ./cypress/e2e/requestsTests.js \
         --config trashAssetsBeforeRuns=false'
         if $requestsTestsCommand >> requestsTest.log
         then
@@ -77,8 +74,7 @@ jobs:
         else
           if grep -q 'Error: ffmpeg exited' requestsTest.log \
           || grep -q 'Because this error occurred during a `before each` hook' requestsTest.log \
-          || grep -q 'EISDIR: illegal operation on a directory, read' requestsTest.log \
-          || grep -q '`cy.visit()` failed trying to load' toolTest.log;
+          || grep -q 'EISDIR: illegal operation on a directory, read' requestsTest.log;
           then
             cat requestsTest.log; $requestsTestsCommand
           else
@@ -106,7 +102,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
-        allow_empty_commit: true
-        force_orphan: true
       if: ${{ always() && ((env.REQUESTS_TESTS == 'true') || (env.TOOL_TESTS == 'true')) }}
                 
