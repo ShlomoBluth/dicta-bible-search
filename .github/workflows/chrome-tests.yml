@@ -33,7 +33,7 @@ jobs:
 
     - name: Install Git LFS
       run: |
-        git-lfs install
+        git lfs install
 
     - name: Pull Git LFS files
       run: git lfs pull
