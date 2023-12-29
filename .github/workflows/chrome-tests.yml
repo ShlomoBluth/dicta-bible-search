@@ -33,7 +33,7 @@ jobs:
 
     - name: Install Git LFS
       run: |
-        sudo apt-get install git-lfs
+        $(npm bin)/apt-get install git-lfs
         git-lfs install
 
     - name: Pull Git LFS files
