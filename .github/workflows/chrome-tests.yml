@@ -24,24 +24,8 @@ jobs:
       
     - uses: actions/checkout@v4
       with:
-        submodules: true
-
-
-    - name: Set up Git LFS
-      uses: actions/setup-git@v2
-      with:
-        lfs: true
-
-    - name: Configure Git LFS
-      run: |
-        git lfs install
-        git lfs version
-
-    - name: Debug Information
-      run: |
-        echo "PATH: $PATH"
-        ls -l $(which git)
-        ls -l $(which git-lfs) || echo "Git LFS not found"
+        lfs: 'true'
+        submodules: recursive
 
     
 
