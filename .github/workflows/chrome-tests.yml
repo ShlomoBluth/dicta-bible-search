@@ -26,10 +26,10 @@ jobs:
       with:
         submodules: true
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
+    - name: Debug Environment
+      run: |
+        echo "PATH: $PATH"
+        which sudo || echo "sudo not found"
 
     - name: Install Git LFS
       run: |
