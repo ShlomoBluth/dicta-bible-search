@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  cypress-e2e:
+  build:
     name: Run on Chrome 89
     runs-on: ubuntu-latest
 
