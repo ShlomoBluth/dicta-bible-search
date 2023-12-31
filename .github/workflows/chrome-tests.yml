@@ -20,7 +20,7 @@ jobs:
 
     - name: Add GPG Key for Google Chrome
       run: |
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 
     - name: Install Git LFS
