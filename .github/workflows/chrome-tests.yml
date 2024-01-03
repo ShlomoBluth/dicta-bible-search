@@ -16,6 +16,12 @@ jobs:
       options: --user 0  # Set the user to root (0)
 
     steps:
+    - name: Install Git LFS
+      run: |
+        apt-get install -y git-lfs
+        git l
+
+    
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -24,10 +30,10 @@ jobs:
 
 
 
-    # - name: Install Git LFS
-    #   run: |
-    #     apt-get install -y git-lfs
-    #     git lfs install
+    - name: Install Git LFS
+      run: |
+        apt-get install -y git-lfs
+        git lfs install
 
     - name: Install a project with a clean slate
       run: |
