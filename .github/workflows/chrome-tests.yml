@@ -19,7 +19,7 @@ jobs:
     - name: Install Git LFS
       run: |
         apt-get install -y git-lfs
-        git l
+        git lfs install
 
     
     - name: Checkout repository
@@ -30,10 +30,10 @@ jobs:
 
 
 
-    - name: Install Git LFS
-      run: |
-        apt-get install -y git-lfs
-        git lfs install
+    # - name: Install Git LFS
+    #   run: |
+    #     apt-get install -y git-lfs
+    #     git lfs install
 
     - name: Install a project with a clean slate
       run: |
