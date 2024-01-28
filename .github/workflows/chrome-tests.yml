@@ -108,11 +108,11 @@ jobs:
         git lfs track "cypress/videos/*"
         git add .gitattributes
 
-    - name: Commit and push changes
-      run: |
-        # git add .
-        git commit -m "Add Git LFS for large files"
-        git push origin ${{ github.ref }}
+    # - name: Commit and push changes
+    #   run: |
+    #     # git add .
+    #     git commit -m "Add Git LFS for large files"
+    #     git push origin ${{ github.ref }}
 
 
     - name: Merge test results into one
