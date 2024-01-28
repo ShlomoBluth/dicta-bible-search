@@ -110,7 +110,7 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git add .
+        # git add .
         git commit -m "Add Git LFS for large files"
         git push origin ${{ github.ref }}
 
