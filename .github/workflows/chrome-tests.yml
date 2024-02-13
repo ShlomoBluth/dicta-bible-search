@@ -41,8 +41,8 @@ jobs:
         # $(npm bin)/cypress cache path
         # $(npm bin)/cypress cache list
         # $(npm bin)/cypress verify
-        # mkdir public
-        # mkdir public/videos
+        mkdir public
+        mkdir public/videos
 
 
     - name: Set var
