@@ -6,35 +6,44 @@ on:
     # * is a special character in YAML so you have to quote this string
     - cron:  '0 6,14,22 * * *'
 
-
 jobs:
-  cypress-e2e:
+  build:
     name: Run on Chrome 89
     runs-on: ubuntu-latest
 
-
-    
-
     container: 
       image: cypress/browsers:node14.16.0-chrome89-ff86
-      options: --user 1001
+      options: --user 0  # Set the user to root (0)
 
     steps:
+    - name: Install Git LFS
+      run: |
+        apt-get install -y git-lfs
+        git lfs install
 
-      
-    - uses: actions/checkout@v4
+    
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
+        lfs: true
         submodules: true
 
+
+
+    # - name: Install Git LFS
+    #   run: |
+    #     apt-get install -y git-lfs
+    #     git lfs install
 
     - name: Install a project with a clean slate
       run: |
         npx ci
-        $(npm bin)/cypress cache path
-        $(npm bin)/cypress cache list
-        $(npm bin)/cypress verify
+        # $(npm bin)/cypress cache path
+        # $(npm bin)/cypress cache list
+        # $(npm bin)/cypress verify
         mkdir public
         mkdir public/videos
+
 
     - name: Set var
       run: |
@@ -93,6 +102,18 @@ jobs:
       run: |
         cp cypress/videos/* public/videos
       if: ${{ always() && (env.REQUESTS_TESTS == 'true') }}
+
+    - name: Track large files with Git LFS
+      run: |
+        git lfs track "cypress/videos/*"
+        git add .gitattributes
+
+    # - name: Commit and push changes
+    #   run: |
+    #     # git add .
+    #     git commit -m "Add Git LFS for large files"
+    #     git push origin ${{ github.ref }}
+
 
     - name: Merge test results into one
       run: npx mochawesome-merge cypress/results/json/*.json > index.json
