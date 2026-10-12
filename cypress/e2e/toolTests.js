@@ -33,7 +33,12 @@ urls.forEach((urlValue,urlKey)=>{
                 cy.showAllWordForms()
                 cy.eachSelectedWordFormMatrix().then(selectedWordFormMatrix=>{
                     //For the first word in the search has 12 words form
-                    expect(selectedWordFormMatrix[0].length).eq(12)
+                    //(the new site lists every word form of the word, also those that are not in the results)
+                    if(urlKey=='live'){
+                        expect(selectedWordFormMatrix[0].length).gte(12)
+                    }else{
+                        expect(selectedWordFormMatrix[0].length).eq(12)
+                    }
                     //For the second word in the search has 2 words form
                     expect(selectedWordFormMatrix[1].length).eq(2)
                     cy.resultPagination({
